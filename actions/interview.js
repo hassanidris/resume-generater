@@ -23,7 +23,7 @@ export async function generateQuiz() {
 
   try {
     const prompt = `
-      Generate 3 technical intervew questions for a ${
+      Generate 10 technical intervew questions for a ${
         user.industry
       } professional${
       user.skills?.length ? ` with expertise in ${user.skills.join(", ")}` : ""
@@ -91,7 +91,7 @@ export async function saveQuizResult(questions, answers, score) {
       )
       .join("\n\n");
 
-    const improvementPrompt = `
+    const prompt = `
       The user got the following ${user.industry} technical interview questions wrong:
 
       ${wrongQuestionsText}
@@ -103,7 +103,7 @@ export async function saveQuizResult(questions, answers, score) {
     `;
 
     try {
-      const result = await model.generateContent(improvementPrompt);
+      const result = await model.generateContent(improvementTip);
 
       const response = result.response;
 
