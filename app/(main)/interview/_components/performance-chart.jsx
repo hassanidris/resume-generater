@@ -54,7 +54,7 @@ const PerformanceChart = ({ assessments }) => {
                     return (
                       <div className=" bg-background border rounded-lg p-2 shadow-md">
                         <p className=" text-sm font-medium">
-                          Score: {payload[0].value}%
+                          Score: {payload[0].value.toFixed(1)}%
                         </p>
                         <p className=" text-xs text-muted-foreground">
                           {payload[0].payload.date}
