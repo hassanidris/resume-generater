@@ -121,3 +121,36 @@ body {
   height: 100%;
   background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.9));
 }
+
+#resume-pdf h1,
+#resume-pdf h2,
+#resume-pdf h3 {
+  margin: 1rem 0;
+  color: #333;
+}
+
+#resume-pdf h1 {
+  font-size: 24px;
+}
+#resume-pdf h2 {
+  font-size: 20px;
+}
+#resume-pdf p {
+  margin: 0.5rem 0;
+}
+
+@media print {
+  #resume-pdf {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #resume-pdf h2 {
+    page-break-after: avoid;
+  }
+
+  #resume-pdf ul,
+  #resume-pdf ol {
+    page-break-inside: avoid;
+  }
+}

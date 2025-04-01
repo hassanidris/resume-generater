@@ -44,16 +44,16 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href={"http://www.youtube.com"}>
+          {/* <Link href={"http://www.youtube.com"}>
             <Button size="lg" className="px-8" variant="outline">
               Watch Tutorial
             </Button>
-          </Link>
+          </Link> */}
         </div>
         <div className=" hero-image-wrapper mt-5 md:mt-0">
           <div ref={imageRef} className="hero-image">
             <Image
-              src={"/hero.jpg"}
+              src={"/hero2.png"}
               height={1280}
               width={720}
               className=" rounded-lg shadow-2xl border mx-auto"
