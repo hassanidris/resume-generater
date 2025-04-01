@@ -10,7 +10,7 @@ const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
 });
 
-export async function saveResume(content) {
+export async function saveResume({ content, formData }) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -29,10 +29,12 @@ export async function saveResume(content) {
       },
       update: {
         content,
+        formData,
       },
       create: {
         userId: user.id,
         content,
+        formData,
       },
     });
     revalidatePath("/resume");

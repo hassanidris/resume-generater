@@ -38,6 +38,7 @@ const ResumeBuilder = ({ initialContent }) => {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(resumeSchema),
     defaultValues: {
@@ -63,12 +64,17 @@ const ResumeBuilder = ({ initialContent }) => {
     if (initialContent) setActiveTab("preview");
   }, [initialContent]);
 
+  // useEffect(() => {
+  //   if (activeTab === "edit") {
+  //     const newContent = getCombinedContent();
+  //     setPreviewContent(newContent ? newContent : initialContent);
+  //   }
+  // }, [formValues, activeTab]);
+
   useEffect(() => {
-    if (activeTab === "edit") {
-      const newContent = getCombinedContent();
-      setPreviewContent(newContent ? newContent : initialContent);
-    }
-  }, [formValues, activeTab]);
+    const newContent = getCombinedContent();
+    setPreviewContent(newContent);
+  }, [formValues]);
 
   const getContactMarkdown = () => {
     const { contactInfo } = formValues;
@@ -78,6 +84,8 @@ const ResumeBuilder = ({ initialContent }) => {
     if (contactInfo.linkedin)
       parts.push(`💼 [LinkedIn] (${contactInfo.linkedin})`);
     if (contactInfo.github) parts.push(`💼 [Github] (${contactInfo.github})`);
+
+    if (!user) return "";
 
     return parts.length > 0
       ? `## <div align="center">${user.fullName}</div>
@@ -108,14 +116,6 @@ const ResumeBuilder = ({ initialContent }) => {
       toast.error(saveError.message || "Failed to save resume");
     }
   }, [saveResult, saveError, isSaving]);
-
-  const onSubmit = async () => {
-    try {
-      await saveResumeFn(previewContent);
-    } catch (error) {
-      console.error("Save error", error);
-    }
-  };
 
   const generatePDF = async () => {
     setIsGenerating(true);
@@ -154,6 +154,42 @@ const ResumeBuilder = ({ initialContent }) => {
     }
   };
 
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const contentToSave = getCombinedContent();
+  //     await saveResumeFn(contentToSave);
+  //     toast.success("Rsume saved successfully");
+  //   } catch (error) {
+  //     console.error("Save error", error);
+  //   }
+  // };
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const formattedContent = previewContent
+        .replace(/\n/g, "\n") // Normalize newlines
+        .replace(/\n\s*\n/g, "\n\n") // Normalize multiple newlines to double newlines
+        .trim();
+
+      console.log(previewContent, formattedContent);
+      await saveResumeFn({
+        content: previewContent,
+        formData: formValues,
+      });
+    } catch (error) {
+      console.error("Save error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (initialContent) {
+      reset(initialContent);
+      const initialMarkdown = getCombinedContent(); // 🧠 generate from form data
+      setPreviewContent(initialMarkdown);
+    }
+  }, [initialContent, reset]);
+
   return (
     <div className=" space-y-4">
       <div className=" flex flex-col md:flex-row justify-between items-center gap-2">
@@ -161,7 +197,11 @@ const ResumeBuilder = ({ initialContent }) => {
           Resume Builder
         </h1>
         <div className=" space-x-2">
-          <Button variant="destructive" onClick={onSubmit} disabled={isSaving}>
+          <Button
+            variant="destructive"
+            onClick={handleSubmit(onSubmit)}
+            disabled={isSaving}
+          >
             {isSaving ? (
               <>
                 <Loader2 className=" h-4 w-4 animate-spin" />
@@ -196,7 +236,7 @@ const ResumeBuilder = ({ initialContent }) => {
           <TabsTrigger value="preview">Markdown</TabsTrigger>
         </TabsList>
         <TabsContent value="edit">
-          <form className=" space-y-8">
+          <form className=" space-y-8" onSubmit={handleSubmit(onSubmit)}>
             <div className=" space-y-4">
               <h3 className=" text-lg font-medium">Contact Information</h3>
               <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg bg-muted/50">
