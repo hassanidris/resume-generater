@@ -125,9 +125,6 @@ const EntryForm = ({ type, entries, onChange }) => {
                   {item.description}
                 </p>
               </CardContent>
-              <CardFooter>
-                <p>Card Footer</p>
-              </CardFooter>
             </Card>
           );
         })}
