@@ -82,15 +82,12 @@ const ResumeBuilder = ({ initialContent }) => {
     if (contactInfo.email) parts.push(`📧 ${contactInfo.email}`);
     if (contactInfo.mobile) parts.push(`📱 ${contactInfo.mobile}`);
     if (contactInfo.linkedin)
-      parts.push(`💼 [LinkedIn] (${contactInfo.linkedin})`);
-    if (contactInfo.github) parts.push(`💼 [Github] (${contactInfo.github})`);
+      parts.push(`💼 [LinkedIn](${contactInfo.linkedin})`);
+    if (contactInfo.github) parts.push(`💼 [Github](${contactInfo.github})`);
 
     if (!user) return "";
 
-    return parts.length > 0
-      ? `## <div align="center">${user.fullName}</div>
-    \n\n<div align="center">\n\n${parts.join(" | ")}\n\n</div>`
-      : "";
+    return parts.length > 0 ? `# ${user.fullName}\n\n${parts.join(" | ")}` : "";
   };
 
   const getCombinedContent = () => {
