@@ -29,13 +29,14 @@ const HeroSection = () => {
       <div className=" space-y-6 text-center">
         <div className=" space-y-6 mx-auto">
           <h1 className=" text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title">
-            Your AI Career Coach for
+            Optimize Your Resume for
             <br />
-            Professional Success
+            ATS Success with AI
           </h1>
           <p className=" mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-            Advance your career with personalized guidance, interview prep, and
-            AI-powered tools for job success.
+            Enhance your job applications with ATS-optimized resumes,
+            personalized AI guidance, and interview preparation tools for career
+            success.
           </p>
         </div>
         <div className=" flex justify-center space-x-4">
@@ -53,7 +54,7 @@ const HeroSection = () => {
         <div className=" hero-image-wrapper mt-5 md:mt-0">
           <div ref={imageRef} className="hero-image">
             <Image
-              src={"/hero2.png"}
+              src={"/hero3.png"}
               height={1280}
               width={720}
               className=" rounded-lg shadow-2xl border mx-auto"
