@@ -37,6 +37,8 @@ export async function generateCoverLetter(data) {
     ${data.jobDescription}
 
     - Compnay Address no longer needs to be added.
+
+    - Generated to be be ATS-compatible.
     
     Requirements:
     1. Use a professional, enthusiastic tone
