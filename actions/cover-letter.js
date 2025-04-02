@@ -28,9 +28,15 @@ export async function generateCoverLetter(data) {
     - Years of Experience: ${user.experience}
     - Skills: ${user.skills?.join(", ")}
     - Professional Background: ${user.bio}
+
+    Add the Date from ${
+      user.createdAt
+    } to your Cover letter in "MMMM YYYY" format.
     
     Job Description:
     ${data.jobDescription}
+
+    - Compnay Address no longer needs to be added.
     
     Requirements:
     1. Use a professional, enthusiastic tone
@@ -120,4 +126,28 @@ export async function deleteCoverLetter(id) {
       userId: user.id,
     },
   });
+}
+
+export async function updateCoverLetter(id, content) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  const updated = await db.coverLetter.update({
+    where: {
+      id,
+      userId: user.id,
+    },
+    data: {
+      content,
+      status: "edited",
+    },
+  });
+
+  return updated;
 }
