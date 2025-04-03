@@ -45,6 +45,7 @@ const ResumeBuilder = ({ initialContent }) => {
       contactInfo: {},
       summary: "",
       skills: "",
+      languages: "",
       experience: [],
       education: [],
       projects: [],
@@ -79,19 +80,33 @@ const ResumeBuilder = ({ initialContent }) => {
   const getContactMarkdown = () => {
     const { contactInfo } = formValues;
     const parts = [];
+    // if (contactInfo.profession) parts.push(`${contactInfo.profession}`);
     if (contactInfo.email) parts.push(`📧 ${contactInfo.email}`);
     if (contactInfo.mobile) parts.push(`📱 ${contactInfo.mobile}`);
     if (contactInfo.linkedin)
       parts.push(`💼 [LinkedIn](${contactInfo.linkedin})`);
     if (contactInfo.github) parts.push(`💼 [Github](${contactInfo.github})`);
+    if (contactInfo.portfolio)
+      parts.push(`💼 [Portfolio](${contactInfo.portfolio})`);
 
     if (!user) return "";
 
-    return parts.length > 0 ? `# ${user.fullName}\n\n${parts.join(" | ")}` : "";
+    // return [
+    //   `# ${user.fullName}\n`,
+    //   contactInfo.profession ? `### ${contactInfo.profession}` : "",
+    //   parts.length > 0 ? parts.join(" | ") : "",
+    // ];
+
+    return parts.length > 0
+      ? `# ${user.fullName}\n ### ${contactInfo.profession}\n\n${parts.join(
+          " | "
+        )}`
+      : "";
   };
 
   const getCombinedContent = () => {
-    const { summary, skills, experience, education, projects } = formValues;
+    const { summary, skills, languages, experience, education, projects } =
+      formValues;
 
     return [
       getContactMarkdown(),
@@ -100,6 +115,7 @@ const ResumeBuilder = ({ initialContent }) => {
       entriesToMarkdown(experience, "Work Experience"),
       entriesToMarkdown(education, "Education"),
       entriesToMarkdown(projects, "Projects"),
+      languages && `## Languages Spoken\n\n${languages}`,
     ]
       .filter(Boolean)
       .join("\n\n");
@@ -238,6 +254,21 @@ const ResumeBuilder = ({ initialContent }) => {
               <h3 className=" text-lg font-medium">Contact Information</h3>
               <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg bg-muted/50">
                 <div className=" space-y-2">
+                  <label className=" text-sm font-medium">Profession</label>
+                  <Input
+                    {...register("contactInfo.profession")}
+                    type="text"
+                    // placeholder="your@email.com"
+                    error={errors.contactInfo?.profession}
+                  />
+                  {errors.contactInfo?.profession && (
+                    <p className=" text-sm text-red-500">
+                      {errors.contactInfo?.profession.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className=" space-y-2">
                   <label className=" text-sm font-medium">Email</label>
                   <Input
                     {...register("contactInfo.email")}
@@ -309,6 +340,20 @@ const ResumeBuilder = ({ initialContent }) => {
                     </p>
                   )}
                 </div>
+
+                <div className=" space-y-2">
+                  <label className=" text-sm font-medium">Portfolio URL</label>
+                  <Input
+                    {...register("contactInfo.portfolio")}
+                    type="url"
+                    placeholder="https://www.your-portfolio.com"
+                  />
+                  {errors.contactInfo?.portfolio && (
+                    <p className=" text-sm text-red-500">
+                      {errors.contactInfo?.portfolio.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -351,6 +396,28 @@ const ResumeBuilder = ({ initialContent }) => {
               />
               {errors.skills && (
                 <p className=" text-sm text-red-500">{errors.skills.message}</p>
+              )}
+            </div>
+
+            {/* Languages */}
+            <div className=" space-y-4">
+              <h3 className="text-lg font-medium">Languages Spoken</h3>
+              <Controller
+                name="languages"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    className=" h-32"
+                    placeholder="List your spoken languages and separated by commas (,)"
+                    error={errors.languages}
+                  />
+                )}
+              />
+              {errors.languages && (
+                <p className=" text-sm text-red-500">
+                  {errors.languages.message}
+                </p>
               )}
             </div>
 
