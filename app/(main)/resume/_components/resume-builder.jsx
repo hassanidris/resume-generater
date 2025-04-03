@@ -109,13 +109,27 @@ const ResumeBuilder = ({ initialContent }) => {
       formValues;
 
     return [
+      `<div class="avoid-page-break">`,
       getContactMarkdown(),
+      `</div>`,
+      `<div class="avoid-page-break">`,
       summary && `## Professional Summary\n\n${summary}`,
+      `</div>`,
+      `<div class="avoid-page-break">`,
       skills && `## Skills\n\n${skills}`,
+      `</div>`,
+      `<div class="avoid-page-break">`,
       entriesToMarkdown(experience, "Work Experience"),
+      `</div>`,
+      `<div class="avoid-page-break">`,
       entriesToMarkdown(education, "Education"),
+      `</div>`,
+      `<div class="avoid-page-break">`,
       entriesToMarkdown(projects, "Projects"),
+      `</div>`,
+      `<div class="avoid-page-break">`,
       languages && `## Languages Spoken\n\n${languages}`,
+      `</div>`,
     ]
       .filter(Boolean)
       .join("\n\n");
@@ -156,6 +170,10 @@ const ResumeBuilder = ({ initialContent }) => {
           format: "a4",
           orientation: "portrait",
           compress: true,
+          putOnlyUsedFonts: true,
+        },
+        pagebreak: {
+          mode: ["avoid"],
         },
       };
       await html2pdf().set(opt).from(element).save();
@@ -523,14 +541,24 @@ const ResumeBuilder = ({ initialContent }) => {
             />
           </div>
           <div className="hidden">
-            <div id="resume-pdf" className=" p-8 text-black bg-white">
+            <div
+              id="resume-pdf"
+              className=" p-8 text-black bg-white"
+              style={{
+                pageBreakInside: "avoid",
+                breakInside: "avoid",
+                overflow: "hidden",
+                width: "100%",
+                fontFamily: "Arial, sans-serif",
+                lineHeight: 1.6,
+              }}
+            >
               <MDEditor.Markdown
                 source={previewContent}
                 style={{
                   background: "white",
                   color: "black",
-                  fontFamily: "Arial, sans-serif",
-                  lineHeight: 1.6,
+                  fontFamily: "inherit",
                 }}
               />
             </div>

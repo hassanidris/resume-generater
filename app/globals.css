@@ -139,7 +139,16 @@ body {
   margin: 0.5rem 0;
 }
 
-@media print {
+#resume-pdf .section,
+#resume-pdf .entry,
+#resume-pdf h1,
+#resume-pdf h3,
+#resume-pdf p {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* @media print {
   #resume-pdf {
     padding: 0 !important;
     margin: 0 !important;
@@ -152,5 +161,32 @@ body {
   #resume-pdf ul,
   #resume-pdf ol {
     page-break-inside: avoid;
+  }
+} */
+
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+  }
+
+  #resume-pdf {
+    padding: 20mm;
+    margin: 0 auto;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  #resume-pdf h1,
+  #resume-pdf h2,
+  #resume-pdf h3,
+  #resume-pdf p,
+  #resume-pdf ul,
+  #resume-pdf ol {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }
