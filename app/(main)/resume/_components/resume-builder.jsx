@@ -157,7 +157,7 @@ const ResumeBuilder = ({ initialContent }) => {
       const html2pdf = (await import("html2pdf.js")).default;
       const element = document.getElementById("resume-pdf");
       const opt = {
-        margin: [15, 15],
+        margin: [10, 10, 10, 10],
         filename: `${user.fullName} - resume.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
