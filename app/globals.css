@@ -129,7 +129,7 @@ body {
   background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.9));
 }
 
-#resume-pdf h1,
+/* #resume-pdf h1,
 #resume-pdf h2,
 #resume-pdf h3 {
   margin: 1rem 0;
@@ -153,25 +153,62 @@ body {
 #resume-pdf p {
   page-break-inside: avoid;
   break-inside: avoid;
+} */
+
+/* Add these styles to your CSS file */
+#resume-pdf {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+#resume-pdf h1 {
+  font-size: 20px;
+  margin-top: 5mm;
+}
+
+#resume-pdf h2 {
+  font-size: 16px;
+  /* margin-top: 4mm; */
+  margin: 12px 0 8px 0;
+}
+#resume-pdf p {
+  margin: 6px 0;
+}
+
+#resume-pdf .avoid-page-break {
+  page-break-inside: avoid;
+  break-inside: avoid-page;
+  padding: 2mm 0;
+}
+
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+  }
+
+  #resume-pdf {
+    padding: 20mm;
+    margin: 0 auto;
+  }
+
+  #resume-pdf h1,
+  #resume-pdf h2,
+  #resume-pdf h3,
+  #resume-pdf p,
+  #resume-pdf ul,
+  #resume-pdf ol,
+  #resume-pdf .section,
+  #resume-pdf .entry {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
 }
 
 /* @media print {
-  #resume-pdf {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  #resume-pdf h2 {
-    page-break-after: avoid;
-  }
-
-  #resume-pdf ul,
-  #resume-pdf ol {
-    page-break-inside: avoid;
-  }
-} */
-
-@media print {
   html,
   body {
     width: 210mm;
@@ -196,4 +233,4 @@ body {
     page-break-inside: avoid;
     break-inside: avoid;
   }
-}
+} */
